@@ -3,8 +3,10 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
-
+    @products = Product.where('discount > 0')
+    if !params[:search].nil? && params[:search].present?
+      # @products = @products.search(params)
+    end
     render json: @products
   end
 

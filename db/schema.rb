@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 2021_12_11_181023) do
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "url_image"
-    t.string "price"
-    t.string "discount"
+    t.integer "price"
+    t.integer "discount"
     t.bigint "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
