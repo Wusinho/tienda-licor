@@ -26,10 +26,8 @@ class Product < ApplicationRecord
     container['price'] = params['price'].to_i * 1000
     container['discount'] = params['discount']
 
-    puts '----------------------------------'
-    puts container['name']
     if container['name'] != ''
-      where("name ILIKE ? AND price <= ? OR category_id IN (?)",  "%#{container['name']}%", container['price'], category_ids)
+      where("name ILIKE ? AND price <= ? ",  "%#{container['name']}%", container['price'])
     elsif container['discount'] != 'false' && (
       container['bebida_energetica'] !='false' ||
       container['pisco'] !='false'||
