@@ -1,9 +1,5 @@
 class Product < ApplicationRecord
   belongs_to :category
-  def self.search(params)
-    name = params['name']
-    where('name LIKE ?', "%#{name}%")
-  end
 
   def self.selectCategory(category)
     where('category = ?', category)
@@ -15,7 +11,6 @@ class Product < ApplicationRecord
 
   def self.search(params)
     container = {}
-    container['discount'] = params['discount']
     container['bebida_energetica'] = params['search'].slice((params['search'].index("=")+1)..-1) == 'true' ? 1 : 'false'
     container['pisco'] = params['pisco'] == 'true' ? 2 : 'false'
     container['ron'] = params['ron'] == 'true' ? 3 : 'false'
@@ -23,14 +18,19 @@ class Product < ApplicationRecord
     container['snack'] = params['snack'] == 'true' ? 5 : 'false'
     container['cerveza'] = params['cerveza'] == 'true' ? 6 : 'false'
     container['vodka'] = params['vodka'] == 'true' ? 7 : 'false'
-    container['price'] = params['price'].to_i * 1000
+    container['name'] = params['name']
     category_ids = []
-    
     container.each do |key, val|
       category_ids << val if val.class == Integer
     end
-    puts container
-    if container['discount'] != 'false' && (
+    container['price'] = params['price'].to_i * 1000
+    container['discount'] = params['discount']
+
+    puts '----------------------------------'
+    puts container['name']
+    if container['name'] != ''
+      where("name ILIKE ? AND price <= ? OR category_id IN (?)",  "%#{container['name']}%", container['price'], category_ids)
+    elsif container['discount'] != 'false' && (
       container['bebida_energetica'] !='false' ||
       container['pisco'] !='false'||
       container['ron'] !='false'||
@@ -39,7 +39,7 @@ class Product < ApplicationRecord
       container['cerveza'] !='false'||
       container['vodka'] !='false'
     )
-      where('discount > 0 AND price < (?) AND category_id IN (?)', container['price'], category_ids)
+      where('discount > 0 AND price <= (?) AND category_id IN (?)', container['price'], category_ids)
     elsif (
       container['bebida_energetica'] !='false' ||
       container['pisco'] !='false'||
@@ -49,9 +49,9 @@ class Product < ApplicationRecord
       container['cerveza'] !='false'||
       container['vodka'] !='false'
     )
-      where('price < (?) AND category_id IN (?)', container['price'], category_ids)
+      where('price <= (?) AND category_id IN (?)', container['price'], category_ids)
     elsif container['discount'] != 'false'
-      where('discount > 0 AND price < (?)', container['price'])
+      where('discount > 0 AND price <= (?)', container['price'])
     else
       return []
     end
