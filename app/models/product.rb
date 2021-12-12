@@ -1,10 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :category
 
-  def self.selectedRandomDiscount
-    where('discount > 5').order('RAND()').limit(3)
-  end
-
   def self.search(params)
     container = {}
     container['bebida_energetica'] = params['search'].slice((params['search'].index("=")+1)..-1) == 'true' ? 1 : 'false'
