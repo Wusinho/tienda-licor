@@ -23,12 +23,13 @@ class Product < ApplicationRecord
     container['snack'] = params['snack'] == 'true' ? 5 : 'false'
     container['cerveza'] = params['cerveza'] == 'true' ? 6 : 'false'
     container['vodka'] = params['vodka'] == 'true' ? 7 : 'false'
+    container['price'] = params['price'].to_i * 1000
     category_ids = []
-
+    
     container.each do |key, val|
       category_ids << val if val.class == Integer
     end
-
+    puts container
     if container['discount'] != 'false' && (
       container['bebida_energetica'] !='false' ||
       container['pisco'] !='false'||
@@ -38,7 +39,7 @@ class Product < ApplicationRecord
       container['cerveza'] !='false'||
       container['vodka'] !='false'
     )
-      where('discount > 0 AND category_id IN (?)', category_ids)
+      where('discount > 0 AND price < (?) AND category_id IN (?)', container['price'], category_ids)
     elsif (
       container['bebida_energetica'] !='false' ||
       container['pisco'] !='false'||
@@ -48,9 +49,9 @@ class Product < ApplicationRecord
       container['cerveza'] !='false'||
       container['vodka'] !='false'
     )
-    where(:category_id => category_ids)
+      where('price < (?) AND category_id IN (?)', container['price'], category_ids)
     elsif container['discount'] != 'false'
-      where('discount > 0')
+      where('discount > 0 AND price < (?)', container['price'])
     else
       return []
     end
