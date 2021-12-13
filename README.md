@@ -1,24 +1,90 @@
-# README
+# Online Store - bsale
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an online Store, the back was built using Ruby on Rails --api.
 
-Things you may want to cover:
+1. The database has 2 tables, categories and products
+2. Back-end using rails (API REST)
 
-* Ruby version
+## **Built With**
 
-* System dependencies
+- Ruby on Rails Api
+- Active_model_serializers
+- Heroku
 
-* Configuration
+### **Endpoints of API**
 
-* Database creation
+| Method | Endpoint   |      Functionality |
+| ------ | ---------- | -----------------: |
+| GET    | products   |   Get the products |
+| GET    | categories | Get the categories |
+| GET    | search     |     Get the search |
 
-* Database initialization
+## **API Deployed At:**
 
-* How to run the test suite
+### [Heroku](https://stormy-meadow-49812.herokuapp.com/)
 
-* Services (job queues, cache servers, search engines, etc.)
+## **Live Project At:**
 
-* Deployment instructions
+### [GitHub Pages | LoL Catalogue](https://github.com/Wusinho/tienda-licor)
 
-* ...
+## **Getting Started**
+
+- Open your terminal and cd where you want to store the project.
+
+`git clone hhttps://github.com/Wusinho/booking-backend-api.git`
+
+After that, open the folder with the code editor of your choice and follow the steps below.
+
+## Setting up the necessary packages:
+
+- Make sure you have [Yarn](https://yarnpkg.com/) installed in your machine.\*\*
+
+- Open the terminal and go to the folder of the game and run the following commands:
+
+  `yarn install`
+
+  `bundle install`
+
+- Those commands will ensure you installed the proper packages required and install all the gems needed for the project.\*\*
+
+## Configure the Database
+
+- You need to configure the database with the following commands:\*\* <br>
+  `rails db:create db:migrate db:seed` <br>
+
+- This command will create the database, migrate the tables as necessary, and populate it needed some data.
+
+- If you have any problem configuring postgresql, check this [docs](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-18-04) for more info
+
+## Starting the Server
+
+- To start the server run: <br>
+  `rails s`
+
+**The front-end app is configured to run on 3001 port**
+
+## **Testing**
+
+**To check the test run the following command:** <br>
+`bundle exec rspec`
+
+## **Author**
+
+👤 **Heber Lazo**
+
+- Github: [@Wusinho](https://github.com/Wusinho)
+- LinkedIn: [Heber Lazo](https://www.linkedin.com/in/heber-lazo-benza-523266133/)
+
+## 🤝 **Contributing**
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/Wusinho/booking-backend-api/issues).
+
+## **Show your support**
+
+Give a ⭐️ if you like this project!
+
+## 📝 **License**
+
+This project is [MIT](LICENSE) licensed.
