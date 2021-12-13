@@ -22,7 +22,7 @@ For the purpose of the project, only the method: -GET is available.
 
 ## **API Deployed At:**
 
-### [BSALE Online Store](https://stormy-meadow-49812.herokuapp.com/)
+### [BSALE Online Store](https://bsale-online-store.herokuapp.com/)
 
 ## **Getting Started**
 
