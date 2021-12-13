@@ -1,7 +1,7 @@
 # Online Store - bsale
 
-This is an online Store, the back was built using Ruby on Rails --api(API REST).
-For the purpose of the project only the method: -GET is available.
+This is an online store, the back was built using Ruby on Rails --API(API REST).
+For the purpose of the project, only the method: -GET is available.
 
 1. The database has 2 tables, categories and products
 2. Back-end using rails (API REST)
