@@ -1,6 +1,7 @@
 # Online Store - bsale
 
-This is an online Store, the back was built using Ruby on Rails --api.
+This is an online Store, the back was built using Ruby on Rails --api(API REST).
+For the purpose of the project only the method: -GET is available.
 
 1. The database has 2 tables, categories and products
 2. Back-end using rails (API REST)
@@ -21,11 +22,7 @@ This is an online Store, the back was built using Ruby on Rails --api.
 
 ## **API Deployed At:**
 
-### [Heroku](https://stormy-meadow-49812.herokuapp.com/)
-
-## **Live Project At:**
-
-### [GitHub Pages | LoL Catalogue](https://github.com/Wusinho/tienda-licor)
+### [BSALE Online Store](https://stormy-meadow-49812.herokuapp.com/)
 
 ## **Getting Started**
 
@@ -49,24 +46,20 @@ After that, open the folder with the code editor of your choice and follow the s
 
 ## Configure the Database
 
-- You need to configure the database with the following commands:\*\* <br>
-  `rails db:create db:migrate db:seed` <br>
+- You need to configure the database with the following commands:\
+
+  - rails db:create
+  - rails db:migrate
+  - rails db:seed
 
 - This command will create the database, migrate the tables as necessary, and populate it needed some data.
-
-- If you have any problem configuring postgresql, check this [docs](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-18-04) for more info
 
 ## Starting the Server
 
 - To start the server run: <br>
-  `rails s`
+  `rails s -p 4000`
 
-**The front-end app is configured to run on 3001 port**
-
-## **Testing**
-
-**To check the test run the following command:** <br>
-`bundle exec rspec`
+**The front-end app is configured to run on 3000 port**
 
 ## **Author**
 
