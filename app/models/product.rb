@@ -1,51 +1,60 @@
 class Product < ApplicationRecord
   belongs_to :category
 
-  def self.search(params)
-    container = {}
-    container['bebida_energetica'] = params['search'].slice((params['search'].index("=")+1)..-1) == 'true' ? 1 : 'false'
-    container['pisco'] = params['pisco'] == 'true' ? 2 : 'false'
-    container['ron'] = params['ron'] == 'true' ? 3 : 'false'
-    container['bebida'] = params['bebida'] == 'true' ? 4 : 'false'
-    container['snack'] = params['snack'] == 'true' ? 5 : 'false'
-    container['cerveza'] = params['cerveza'] == 'true' ? 6 : 'false'
-    container['vodka'] = params['vodka'] == 'true' ? 7 : 'false'
-    container['name'] = params['name']
-    category_ids = []
-    container.each do |key, val|
-      category_ids << val if val.class == Integer
-    end
-    container['price'] = params['price'].to_i * 1000
-    container['discount'] = params['discount']
+  def self.search_name(name)
+    where('name ILIKE ?', "%#{name}%") 
+  end
 
-    if container['name'] != ''
-      where("name ILIKE ? AND price <= ? ",  "%#{container['name']}%", container['price'])
-    elsif container['discount'] != 'false' && (
-      container['bebida_energetica'] !='false' ||
-      container['pisco'] !='false'||
-      container['ron'] !='false'||
-      container['bebida'] !='false'||
-      container['snack'] !='false'||
-      container['cerveza'] !='false'||
-      container['vodka'] !='false'
-    )
-      where('discount > 0 AND price <= (?) AND category_id IN (?)', container['price'], category_ids)
-    elsif (
-      container['bebida_energetica'] !='false' ||
-      container['pisco'] !='false'||
-      container['ron'] !='false'||
-      container['bebida'] !='false'||
-      container['snack'] !='false'||
-      container['cerveza'] !='false'||
-      container['vodka'] !='false'
-    )
-      where('price <= (?) AND category_id IN (?)', container['price'], category_ids)
-    elsif container['discount'] != 'false'
-      where('discount > 0 AND price <= (?)', container['price'])
+  def self.filter(cid)
+    where('category_id = ?', cid)
+  end
+
+  def self.search(category,name,discount,price)
+
+    params = {
+      name: name,
+      categories: category && category.split(',').map {|ele| ele.to_i},
+      disc: discount == 'false' ? false : true,
+      price: price.to_i * 1000
+    }
+
+    #with discount
+    if params[:disc]
+   # name and price
+      if params[:name] && params[:categories]
+        where("discount > 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
+    #search only by name
+      elsif params[:name]
+        where("discount > 0 AND name ILIKE ? AND price <= ? ",  "%#{params[:name]}%", params[:price])
+    #search only by cat
+      elsif params[:categories]
+        where('discount > 0 AND price <= ? AND category_id In (?)', params[:price], params[:categories])
+      else
+        return []
+      end
+
+    #no discount
     else
-      return []
+
+   # name and price
+      if params[:name] && params[:categories] 
+        where("discount = 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
+    #search only by name
+      elsif params[:name]
+
+        where("discount = 0 AND name ILIKE ? AND price <= ? ",  "%#{params[:name]}%", params[:price])
+    #search only by cat
+      elsif params[:categories]
+        where('discount = 0 AND price <= ? AND category_id In (?)' , params[:price], params[:categories])
+      else
+        return []
+      end
+
     end
     
+  
+
+
   end
 
 end

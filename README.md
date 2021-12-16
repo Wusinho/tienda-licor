@@ -3,7 +3,7 @@
 This is an online store, the back was built using Ruby on Rails --API(API REST).
 For the purpose of the project, only the method: -GET is available.
 
-1. The database has 2 tables, categories and products
+1. The database has 2 models, categories and products
 2. Back-end using rails (API REST)
 
 ## **Built With**
@@ -19,6 +19,14 @@ For the purpose of the project, only the method: -GET is available.
 | GET    | products   |   Get the products |
 | GET    | categories | Get the categories |
 | GET    | search     |     Get the search |
+
+There are 3 current endpoints that are currently working.
+
+For example in the local environment the BASEURL will be : http://localhost:3000/
+
+- Get BASE_URL+products, the request to this end point will give a response with all the products in the database
+- Get BASE_URL+categories, the request to this end point will give a response with all the categories from the product in the database.
+- Get BASE_URL+search, the request is a string with all the different search arguments you need ( name, price, discount or any category from the menu)
 
 ## **API Deployed At:**
 
