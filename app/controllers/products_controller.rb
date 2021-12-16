@@ -9,13 +9,16 @@ class ProductsController < ApplicationController
   end
 
   def search
-      
-    @products = Product.search(
-      params[:cid],
-      params[:name],
-      params[:discount],
-      params[:price],
-    )
+     return [] if params[:price] == '0'
+
+    @products = Product.filter(params[:price], params[:discount])
+
+    if params[:cid] || params[:name]
+      @products = @products.search(
+        params[:cid],
+        params[:name],
+      )
+    end
       
     render json: @products
   end

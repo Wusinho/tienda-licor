@@ -1,57 +1,42 @@
 class Product < ApplicationRecord
   belongs_to :category
 
-  def self.search(category,name,discount,price)
+  def self.filter(price, discount)
+    return [] unless price.to_i
+    real_price = price.to_i * 1000
+    
+    if discount == 'false'
+      where('discount = 0 AND price <= ?', real_price)
+    else
+      where('discount > 0 AND price <= ?', real_price)
+    end
+
+  end
+
+
+  def self.search(category,name)
 
     params = {
       name: name,
       categories: category && category.split(',').map {|ele| ele.to_i},
-      disc: discount == 'false' ? false : true,
-      price: price.to_i * 1000
     }
 
-    #with discount
-    if params[:disc]
-   # name 
       if params[:name] 
-        
+      puts params[:name]    
         #name and cat
         if params[:categories]
-          where("discount > 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
+          where("name ILIKE ? AND category_id In (?) ",  "%#{params[:name]}%", params[:categories])
         end
 
         #only name
-        where("discount > 0 AND name ILIKE ? AND price <= ? ",  "%#{params[:name]}%", params[:price])
+        where("name ILIKE ? ",  "%#{params[:name]}%")
 
     #search only by cat
-      elsif params[:categories]
-        where('discount > 0 AND price <= ? AND category_id In (?)', params[:price], params[:categories])
-    #only price
-      else
-        where('discount > 0 AND price <= ? ', params[:price])
+        else 
+        where('category_id In (?)', params[:categories])
       end
 
-    #no discount
-    else
-   # name 
-      if params[:name] 
-        
-        #name and cat
-        if params[:categories] 
-          where("discount = 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
-        end
-        
-        # only name
-        where("discount = 0 AND name ILIKE ? AND price <= ? ",  "%#{params[:name]}%", params[:price])
-
-    #search only by cat
-      elsif params[:categories]
-        where('discount = 0 AND price <= ? AND category_id In (?)' , params[:price], params[:categories])
-    #only price
-      else
-        where('discount = 0 AND price <= ? ', params[:price])
-      end
-    end
+   
   end
 
 end
