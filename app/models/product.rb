@@ -1,14 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :category
 
-  def self.search_name(name)
-    where('name ILIKE ?', "%#{name}%") 
-  end
-
-  def self.filter(cid)
-    where('category_id = ?', cid)
-  end
-
   def self.search(category,name,discount,price)
 
     params = {
@@ -41,7 +33,6 @@ class Product < ApplicationRecord
 
     #no discount
     else
-
    # name 
       if params[:name] 
         
@@ -60,12 +51,7 @@ class Product < ApplicationRecord
       else
         where('discount = 0 AND price <= ? ', params[:price])
       end
-
     end
-    
-  
-
-
   end
 
 end
