@@ -20,34 +20,45 @@ class Product < ApplicationRecord
 
     #with discount
     if params[:disc]
-   # name and price
-      if params[:name] && params[:categories]
-        where("discount > 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
-    #search only by name
-      elsif params[:name]
+   # name 
+      if params[:name] 
+        
+        #name and cat
+        if params[:categories]
+          where("discount > 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
+        end
+
+        #only name
         where("discount > 0 AND name ILIKE ? AND price <= ? ",  "%#{params[:name]}%", params[:price])
+
     #search only by cat
       elsif params[:categories]
         where('discount > 0 AND price <= ? AND category_id In (?)', params[:price], params[:categories])
+    #only price
       else
-        return []
+        where('discount > 0 AND price <= ? ', params[:price])
       end
 
     #no discount
     else
 
-   # name and price
-      if params[:name] && params[:categories] 
-        where("discount = 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
-    #search only by name
-      elsif params[:name]
-
+   # name 
+      if params[:name] 
+        
+        #name and cat
+        if params[:categories] 
+          where("discount = 0 AND name ILIKE ? AND price <= ? AND category_id In (?) ",  "%#{params[:name]}%", params[:price], params[:categories])
+        end
+        
+        # only name
         where("discount = 0 AND name ILIKE ? AND price <= ? ",  "%#{params[:name]}%", params[:price])
+
     #search only by cat
       elsif params[:categories]
         where('discount = 0 AND price <= ? AND category_id In (?)' , params[:price], params[:categories])
+    #only price
       else
-        return []
+        where('discount = 0 AND price <= ? ', params[:price])
       end
 
     end
