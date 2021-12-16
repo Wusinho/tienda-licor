@@ -10,44 +10,15 @@ class ProductsController < ApplicationController
 
   def search
       
-        @products = Product.search(
-          params[:cid],
-          params[:name],
-          params[:discount],
-          params[:price],
-        )
+    @products = Product.search(
+      params[:cid],
+      params[:name],
+      params[:discount],
+      params[:price],
+    )
       
-      render json: @products
-        
-        # obj = Hash.new(0)
-        #   @name.each { |p| obj[p] += 1}
-        #   @categories.each {|p| obj[p] += 1}
-        #   @unique = []
-        #   obj.each { |key, value| @unique << key if value > 1}
-
-        # render json: {
-        #   prod: @unique,
-        #   cat: @category,
-        #   name: @name,
-        #   other: 'hell'
-      
-        #  }
-      # else
-      #   @products = Product.search_name(params[:name])
-      #   render json: {
-         
-      #     prod: @products,
-      #     filt: []
-      #    }
-      # end
-
-  
+    render json: @products
   end
-
-  # def filter1
-  #   @products = Product.filter(params[:cid])
-  #   render json: @products
-  # end
 
   # GET /products/1
   def show
