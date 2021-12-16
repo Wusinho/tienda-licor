@@ -9,7 +9,6 @@ class Product < ApplicationRecord
 
   end
 
-
   def self.search(category,name)
 
     params = {
@@ -19,19 +18,15 @@ class Product < ApplicationRecord
 
       if params[:name] 
         #name and cat
-        if params[:categories]
-          where("name ILIKE ? AND category_id In (?) ",  "%#{params[:name]}%", params[:categories])
-        end
+          return where("name ILIKE ? AND category_id In (?) ",  "%#{params[:name]}%", params[:categories]) if params[:categories]
 
         #only name
         where("name ILIKE ? ",  "%#{params[:name]}%")
 
-    #search only by cat
+        #search only by cat
         else 
-        where('category_id In (?)', params[:categories])
+          where('category_id In (?)', params[:categories])
       end
-
-   
   end
 
 end
