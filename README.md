@@ -1,16 +1,29 @@
 # Online Store - bsale
 
-This is an online store, the back was built using Ruby on Rails --API(API REST).
-For the purpose of the project, only the method: -GET is available.
+# Objectives
 
-1. The database has 2 models, categories and products
-2. Back-end using rails (API REST)
+Build an online store that displays products grouped by category, generating separately backend (REST API) and frontend and using the database that is available to its development.
 
-## **Built With**
+In addition, you have to add a search engine, which has to be implemented at the server, through an API Rest whose language and framework can be free choice.
+
+The front-end must be developed with vanilla javascript without any framework, the use of libraries, components
+specific, such as; bootstrap, material, Jquery, among others are allowed.
+
+Finally, make the application and the repository available with the code and the hosting.
+
+# Description of the Project
+
+For the development of the project, the following tools were used:
 
 - Ruby on Rails Api
 - Active_model_serializers
 - Heroku
+
+## Database
+
+- For this proyect there are 2 models. There's one assosiation Product belongs_to Category
+
+  ![image](./app/assets/data_base.png)
 
 ### **Endpoints of API**
 
